@@ -73,7 +73,7 @@
                 <h2 class="layui-colla-title">个人信贷类</h2>
                 <div class="layui-colla-content" id="PerPerson">
                     <div class="layui-form-item">
-                        <div class="layui-input-inline">
+                        <div class="layui-input-inline" style="text-align: center">
                             <input type="checkbox" name="like[write]" title="测试">
                         </div>
                         <div class="layui-input-inline">
@@ -81,11 +81,11 @@
                         </div>
                         <div class="layui-input-inline">
                             <div class="layui-row">
-                                <div class="layui-col-md3">
+                                <div class="layui-col-md3" style="text-align: right">
                                     <button type="button" class="layui-btn layui-btn-primary num_action_sub">-</button>
                                 </div>
                                 <div class="layui-col-md6">
-                                    <input type="text" value="0" name="write" class="layui-input num">
+                                    <input type="text" value="0" name="write" class="layui-input num" style="text-align: center">
                                 </div>
                                 <div class="layui-col-md3">
                                     <button type="button" class="layui-btn layui-btn-primary num_action_add">+</button>
@@ -207,19 +207,19 @@
             });
 
             layui.$('.num_action_sub').on('click',function () {
-               if($(this).siblings('.num').val()=='0')
+               if($(this).parent().next().children('.num').val()=='0')
                {
 
                }
                else
                {
-                   $(this).siblings('.num').val(parseInt($(this).siblings('.num').val()) - 1);
+                   $(this).parent().next().children('.num').val(parseInt($(this).parent().next().children('.num').val()) - 1);
                }
             });
 
             layui.$('.num_action_add').on('click',function () {
                 // layer.msg($(this).siblings('.num').val());
-                $(this).siblings('.num').val(parseInt($(this).siblings('.num').val()) + 1);
+                $(this).parent().prev().children('.num').val(parseInt($(this).parent().prev().children('.num').val()) + 1);
             });
 
             layui.$('.add').on('click', function(){
