@@ -109,23 +109,34 @@
                 });
             }
             else if($(this).text() === '编辑'){
-                layer.prompt({title: '输入档案类别名称', formType: 2}, function(text, index){
-                    layer.msg('您修改了:'+text);
-                    layer.close(index);
+                if($(this).parent().next().children('.SelectedClass').length){
+                    layer.prompt({title: '输入档案类别名称', formType: 2}, function(text, index){
+                        layer.msg('您修改了:'+text);
+                        layer.close(index);
 
-                    button.parent().next().children(".SelectedClass").text(text);
+                        button.parent().next().children(".SelectedClass").text(text);
 
-                });
+                    });
+                }
+                else{
+                    layer.alert('请选择需要编辑的节点!');
+                }
             }
             else {
-                layer.confirm('您确定删除当前节点吗？', {
-                    btn: ['确定','取消'] //按钮
-                }, function(){
-                    button.parent().next().children(".SelectedClass").remove();
-                    layer.msg("删除成功!", {time: 2000});
-                }, function(){
-                    layer.closeAll();
-                });
+                if($(this).parent().next().children('.SelectedClass').length)
+                {
+                    layer.confirm('您确定删除当前节点吗？', {
+                        btn: ['确定','取消'] //按钮
+                    }, function(){
+                        button.parent().next().children(".SelectedClass").remove();
+                        layer.msg("删除成功!", {time: 2000});
+                    }, function(){
+                        layer.closeAll();
+                    });
+                }
+                else{
+                    layer.alert('请选择需要删除的节点!');
+                }
             }
         });
 
