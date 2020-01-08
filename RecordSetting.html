@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ul-li模拟表格测试</title>
+    <link href="./layui/css/layui.css" rel="stylesheet">
+    <link href="./RecordSetting/RecordSetting.css" rel="stylesheet">
+</head>
+<body>
+
+<div style="padding: 20px; background-color: #F2F2F2;">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">档案类别信息编辑</div>
+                <div class="layui-card-body">
+                    <div class="layui-row">
+                        <div class="layui-col-md4">
+                            <div style="float: left">
+                                <label class="label-block">
+                                    档案类别
+                                </label>
+                                <div class="layui-btn-group" id="btn_group_type">
+                                    <button type="button" class="layui-btn">增加</button>
+                                    <button type="button" class="layui-btn">编辑</button>
+                                    <button type="button" class="layui-btn">删除</button>
+                                </div>
+                                <ul class="display_ul">
+                                    <li name="A_1">个人</li>
+                                    <li name="A_2">企业</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="layui-col-md4">
+                            <div style="float: left">
+                                <label class="label-block">
+                                    档案信息类别
+                                </label>
+                                <div class="layui-btn-group" id="btn_group_infortype">
+                                    <button type="button" class="layui-btn">增加</button>
+                                    <button type="button" class="layui-btn">编辑</button>
+                                    <button type="button" class="layui-btn">删除</button>
+                                </div>
+                                <ul class="display_ul">
+                                    <li name="B_1">个人贷款类</li>
+                                    <li name="B_2">企业贷款类</li>
+                                    <li name="B_3">个人担保类</li>
+                                    <li name="B_4">企业担保类</li>
+                                    <li name="B_5">凭证类</li>
+                                    <li name="B_6">抵押类</li>
+                                    <li name="B_7">柜面业务类</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="layui-col-md4">
+                            <div style="float: left">
+                                <label class="label-block">
+                                    信息类别具体名目
+                                </label>
+                                <div class="layui-btn-group" id="btn_group_list">
+                                    <button type="button" class="layui-btn">增加</button>
+                                    <button type="button" class="layui-btn">编辑</button>
+                                    <button type="button" class="layui-btn">删除</button>
+                                </div>
+                                <ul class="display_ul">
+                                    <li name="C_1">身份证</li>
+                                    <li name="C_2">营业执照</li>
+                                    <li name="C_3">护照</li>
+                                    <li name="C_4">担保保证书</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script src="./layui/layui.js" type="application/javascript"></script>
+<script>
+    layui.use(['jquery', 'layer'], function () {
+        var $ = layui.jquery
+        ,layer = layui.layer;
+
+        $("ul[class='display_ul'] li").click(function () {
+            console.log($(this).attr("name"));
+            $(this).parent().children().removeClass('SelectedClass');
+            $(this).toggleClass('SelectedClass');
+        });
+
+        $(".layui-btn").click(function () {
+            var button = $(this);
+            if($(this).text() === '增加'){
+
+                layer.prompt({title: '输入档案类别名称', formType: 2}, function(text, index){
+                    layer.msg('您添加了:'+text);
+                    layer.close(index);
+                    test(text, 'add', function () {
+                        button.parent().nextAll("ul").append('<li name="A_3">'+ text +'</li>');
+                    });
+                    // button.parent().nextAll("ul").append('<li>'+ text +'</li>');
+
+                    $("ul[class='display_ul'] li").click(function () {
+                        $(this).parent().children().removeClass('SelectedClass');
+                        $(this).toggleClass('SelectedClass');
+                    });
+                });
+            }
+            else if($(this).text() === '编辑'){
+                layer.prompt({title: '输入档案类别名称', formType: 2}, function(text, index){
+                    layer.msg('您修改了:'+text);
+                    layer.close(index);
+
+                    button.parent().next().children(".SelectedClass").text(text);
+
+                });
+            }
+            else {
+                layer.confirm('您确定删除当前节点吗？', {
+                    btn: ['确定','取消'] //按钮
+                }, function(){
+                    button.parent().next().children(".SelectedClass").remove();
+                    layer.msg("删除成功!", {time: 2000});
+                }, function(){
+                    layer.closeAll();
+                });
+            }
+        });
+
+        function test(val, type, fuc){
+            console.log(val);
+            console.log(type);
+            fuc();
+        }
+
+        function ajaxSend(val, type, button) {
+            $.ajax({
+                url: '',
+                type: 'post',
+                data: {'type': type, 'value': val},
+                success: function (obj) {
+                    if(obj.status){
+
+                    }
+
+                }
+            });
+        }
+    })
+</script>
+</html>
